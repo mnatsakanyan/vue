@@ -1,0 +1,165 @@
+
+<div id="product">
+	
+	<div class="mainProd"  id="app">
+		<v-app id="inspire">
+            <!-- <ul class="prodCat">
+                  <li v-for="dat in dataMenu" :key="dataMenu.id">
+                        <button @click="getProduct(dat.id)">{{dat.cat_name}}</button>
+				  </li>
+				  
+				  <div class="Cboth"></div>
+		</ul> -->
+		<div>
+		<v-tabs dark grow>
+				<v-toolbar color="cyan" dark>
+					<v-toolbar-side-icon></v-toolbar-side-icon>
+					<v-toolbar-title>Page title</v-toolbar-title>
+					<v-spacer></v-spacer>
+					<v-btn icon>
+						<v-icon>search</v-icon>
+					</v-btn>
+					<v-btn icon>
+						<v-icon>more_vert</v-icon>
+					</v-btn>
+					<v-tabs-bar class="cyan" slot="extension">
+						<v-tabs-slider color="yellow"></v-tabs-slider>
+						<v-tabs-item
+							v-for="(dat,i) in dataMenu"
+							:key="dat.id"
+							:href="'#tab-' + i"
+							@click="getProduct(dat.id)"
+						>
+							{{ dat.cat_name }}
+						</v-tabs-item>
+						<v-menu :nudge-width="100" left bottom>
+							<v-tabs-item slot="activator">
+							Menu
+							<v-icon>arrow_drop_down</v-icon>
+							</v-tabs-item>
+							<v-list class="grey lighten-3">
+							</v-list>
+						</v-menu>
+					</v-tabs-bar>
+				</v-toolbar>
+			</v-tabs>
+		</div>
+		<div class="catInfo" v-for="cat in catSingle">
+			<div class="leftInfo" >
+				<img :src="cat.cat_image" alt="" >
+			</div>
+			<div class="centerDiv">
+				<p>{{cat.cat_name}}</p>
+			</div>
+			<div class="rightInfo">
+				<v-layout row justify-center>
+				<v-dialog v-model="dialog" persistent max-width="500px">
+					<v-btn  dark slot="activator">+</v-btn>
+					<v-card>
+						<v-card-title>
+							<span class="headline">New Product</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container grid-list-md>
+								<v-layout wrap>
+									<v-flex xs12>
+										<v-text-field label="Brand" v-model="brend" required></v-text-field>
+									</v-flex>
+									<v-flex xs12>
+										<v-text-field label="Color" v-model="color" required></v-text-field>
+									</v-flex>
+									<v-flex xs12>
+										<v-text-field label="Quality" v-model="quality" required></v-text-field>
+									</v-flex>
+									<v-flex xs12 sm6>
+										<v-text-field label="Price" v-model="price" required></v-text-field>
+										</v-flex>
+									<v-flex xs6>
+										<v-select
+											v-bind:items="states"
+											v-model="made_in"
+											label="Made In"
+											single-line
+											auto
+											hide-details
+										></v-select>
+									</v-flex>
+									<v-flex xs12 sm6>
+										<v-select
+											label="Size"
+											v-model="size"
+											required
+											:items="['0-20', '20-30', '30-40', '40+']"
+										></v-select>
+									</v-flex>
+									<v-flex xs12>
+										<div class="form-group">
+											<label for="exampleFormControlSelect1" class="lab">Category*</label>
+											<select class="form-control" id="exampleFormControlSelect1" >
+												<option v-for="dat in dataMenu" :value="dat.id">{{dat.cat_name}}</option>
+											</select>
+										</div>
+									</v-flex>
+									<v-flex xs12>
+										<v-text-field label="Image(URL)" required v-model="image"></v-text-field>
+									</v-flex>
+									<v-flex xs12>
+										<v-text-field label="Description" required v-model="des"></v-text-field>
+									</v-flex>
+								</v-layout>
+						</v-container>
+						<small>*indicates required field</small>
+					</v-card-text>
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+						<v-btn color="blue darken-1" flat @click="createProduct">Save</v-btn>
+					</v-card-actions>
+					</v-card>
+				</v-dialog>
+			</v-layout>
+			</div>
+		</div>
+
+      <div class="prodList">
+		<v-layout row>
+			<v-flex xs12 sm6 offset-sm3 lg3 white v-for="card in dataProd" :key="card.id" v-on:click="">
+				<v-card>
+					<v-card-media
+					:src="card.image"
+					height="300px"
+					>
+					</v-card-media>
+					<v-card-title primary-title>
+						<div>
+							<div class="headline">Brand</div>
+							<span class="grey--text">{{card.brand}}</span>
+						</div>
+					</v-card-title>
+					<v-card-actions>
+						<router-link v-bind:to="{ path: '/edit', query: { prodId: card.id } }"  append>
+							<v-btn flat >
+								<v-icon class="ed">fa-edit</v-icon>Edit
+							</v-btn>
+						</router-link>
+						<v-btn flat color="purple">Images</v-btn>
+						<v-btn color="error" @click="deleteProduct(card.id)">Delete</v-btn>
+						<v-spacer></v-spacer>
+						<v-btn icon @click.native="show = !show">
+							<v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+						</v-btn>
+					</v-card-actions>
+					<v-slide-y-transition>
+						<v-card-text v-show="show">Description
+								{{card.description}}
+						</v-card-text>
+					</v-slide-y-transition>
+				</v-card>
+			</v-flex>
+		</v-layout>
+	  </div>
+	  
+	</v-app>
+</div>
+</div>
+

@@ -1,0 +1,69 @@
+
+<section class="edir-prod">
+<div id="app">
+		<v-app id="inspire">
+  <v-app id="inspire" v-for="dat in dataProduct">
+    <form>
+		<input
+		label="Brand"
+		:value="dat.brand"
+		class=""
+		required
+		></input>
+
+		<v-text-field
+		label="Color"
+		:value="dat.color"
+		required
+		class="color"
+		>
+		</v-text-field>
+
+		<v-text-field
+		label="Made in"
+		class="made_in"
+		:value="dat.made_in"
+		required
+		>
+		</v-text-field>
+
+		<v-text-field
+		label="Quality"
+		class="quality"
+		:value="dat.quality"
+		required
+		></v-text-field>
+
+		<v-text-field
+		label="Size"
+		class="size"
+		:value="dat.size"
+		required
+		>
+		</v-text-field>
+
+		<v-text-field
+		number
+		label="Price"
+		class="price"
+		:value="dat.price"
+		required
+		></v-text-field>textarea 
+	  
+		<v-text-field
+		
+		label="Description"
+		class="description"
+		textarea
+		:value="dat.description"
+		required
+		></v-text-field>
+  
+      <v-btn @click="editProduct(dat.id)">Save</v-btn>
+      <v-btn >cancel</v-btn>
+    </form>
+  </v-app>
+</v-app>
+</div>
+</section>
+

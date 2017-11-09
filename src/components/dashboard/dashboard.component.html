@@ -1,0 +1,93 @@
+<div class="dashboard">
+	<section class="mainSection">
+    <h2 style="color: aliceblue;text-align: center;"> Category Table </h2>
+      <hr>
+		<div class="dropdown">
+			<button type="button" data-toggle="modal" data-target="#myModal" class=" btn-top btn btn-primary btn-primary pull-right"> 
+				<span class="glyphicon glyphicon-plus"></span> &nbsp Create Category
+			</button>
+		</div>
+		<v-app id="inspire">
+			<v-data-table
+				v-bind:headers="headers"
+				:items="catArray"
+				class="elevation-1"
+				hide-actions
+				dark
+			  >
+			  <template slot="items" slot-scope="props">
+				<td>{{props.item.id}}</td>
+				<td class="text-xs-right catImage"><img :src="props.item.cat_image" alt=""></td>
+				<td class="text-xs-right">{{ props.item.cat_name }}</td>
+				<td class="text-xs-right">{{ props.item.cat_date }}</td>
+				<td>
+					<a class="btn btn-danger edit" aria-label="Settings"  data-target="#delModal" data-toggle="modal" v-on:click="delCat(props.item.id)" >
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
+					&nbsp 
+					<a data-target="#modalUpdate" data-toggle="modal" class="btn btn-info edit" aria-label="Settings" v-on:click="getCatOne(props.item.id)">
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a> 
+				</td>
+			  </template>
+			</v-data-table>
+		  </v-app>
+			<!-- Modal Create -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+			
+			<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Create Category</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="usr">Category Name:</label>
+							<input type="text" class="form-control" id="usr" v-model="name">
+
+							<label for="pwd">Category Image:</label>
+							<input type="text" class="form-control" id="pwd" v-model="image">
+						</div>
+					</div>
+					<div class="modal-footer">
+							<v-btn color="primary" dark v-on:click="newCat" data-dismiss="modal">Create
+									<v-icon dark right>check_circle</v-icon>
+								  </v-btn>
+						<!-- <button type="button" class="btn btn-primary"  ></button> -->
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal UPDATE-->
+		<div class="modal fade" id="modalUpdate" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Update Category</h4>
+					</div>
+					<div class="modal-body" v-for="catOne in onlyCat">
+						<div class="form-group"  >
+							<label for="usr">Category Name:</label>
+							<input type="text" class="form-control"  id="name_up"  :value="catOne.cat_name">
+
+							<label for="pwd">Category Image:</label>
+							<input type="text" class="form-control"  id="image_up" :value="catOne.cat_image">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateCat(catOne.id)" >Save</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+<footer>
+</footer>
+</div>
